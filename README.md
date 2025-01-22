@@ -168,6 +168,11 @@ Simply put, this downloads the file as a temp file, we load it in with `TextFile
 
 Why do we want to support streaming? What about streaming is important, or useful?
 
+#### Answer #1:
+
+To generate full response from RAG it ofer incurs a delay of several seconds since user inputs their question. It may become more noticeable in complex applications with multiple model calls like RAG. Streaming supports generating reponses in real-time as they are being generated which allows for results to be displayed as they are produced. Streaming is important as it enhances user experience as users will have live updates and real-time feedback rather than having to deal with latency until the full response is generated.
+
+
 ### On Chat Start:
 
 The next scope is where "the magic happens". On Chat Start is when a user begins a chat session. This will happen whenever a user opens a new chat window, or refreshes an existing chat window.
@@ -209,6 +214,14 @@ Now, we'll save that into our user session!
 #### ❓ QUESTION #2: 
 
 Why are we using User Session here? What about Python makes us need to use this? Why not just store everything in a global variable?
+
+#### Answer #2: 
+
+We are using 'user session' here to allow multiple users to chat with the bot at the same time the each user will have their session/interactions with the bot persist in memory so we maintain the context of the interactions with each user and make their experience unique to thier own session.
+
+I think the reason Python makes us need to use user session is because "Chainlit is async by default to allow agents to execute tasks in parallel and allow multiple users on a single app." To support multiple users to have thier own personalized experience, the user session is needed.
+
+Just storing everything in a global variable will lead to several problems because it means we cannot support multi-user environment. Global variable is a variable that is shared by all instances, when multiple users interact with the bot simultaneously data from one user can easily overwrite data from another. This can lead to wrong information being shown to users and a confusing experience.
 
 ### On Message
 
